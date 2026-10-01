@@ -1,0 +1,26 @@
+# Regenerates assets/tokens.css whenever tokens.json changes on main, and commits the result.
+name: Build design tokens
+on:
+  push:
+    branches: [main]
+    paths: [tokens.json, scripts/build-tokens.mjs]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/build-tokens.mjs
+      - name: Commit tokens.css if it changed
+        run: |
+          if git diff --quiet -- assets/tokens.css; then echo "No changes."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add assets/tokens.css
+          git commit -m "Build tokens.css from tokens.json"
+          git push
