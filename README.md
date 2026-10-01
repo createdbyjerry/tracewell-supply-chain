@@ -14,63 +14,21 @@ An interactive graph that traces natural gas from well pads through processing a
 | `scripts/build-tokens.mjs` | Zero-dependency Node script that turns `tokens.json` into `tokens.css` |
 | `.github/workflows/build-tokens.yml` | Runs the build automatically when `tokens.json` changes on `main` |
 | `assets/twsc.js` | Graph engine + UI. Injects its own markup into an empty `#twsc-root` |
-| `webflow/embed-snippet.html` | Paste-ready Webflow Code Embed (loads CSS/JS from this repo via jsDelivr) |
-| `webflow/iframe-snippet.html` | Alternative Webflow embed that iframes the GitHub Pages site |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is |
 
 ## Run it locally
 
 Open `index.html` in a browser. Or serve the folder: `python3 -m http.server` and visit http://localhost:8000.
 
-## 1. Put it on GitHub
+## Publish it
 
-**Option 1: in the browser (no Git needed)**
-1. Go to https://github.com/new, name the repo (e.g. `tracewell-supply-chain`), choose Public, click **Create repository**.
-2. On the empty repo page click **uploading an existing file**.
-3. Drag in the *contents* of this folder (`index.html`, `design-system.html`, `tokens.json`, `README.md`, `.nojekyll`, `.gitignore`, and the `assets`, `scripts`, `webflow` and `.github` folders). Hidden files: on macOS press `Cmd+Shift+.` in Finder to show them.
-4. Click **Commit changes**.
+This prototype is a standalone site on GitHub Pages. Your main website links to it.
 
-**Option 2: command line**
-```bash
-cd tracewell-supply-chain
-git init
-git add .
-git commit -m "Initial import from Webflow"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/tracewell-supply-chain.git
-git push -u origin main
-```
-
-## 2. Turn on GitHub Pages (a live preview URL)
-
-Repo → **Settings → Pages** → Source: **Deploy from a branch** → Branch: `main`, folder `/ (root)` → **Save**.
-After a minute the prototype is live at `https://YOUR-USERNAME.github.io/tracewell-supply-chain/`.
-
-## 3. Cut a release (so Webflow points at a fixed version)
-
-Repo → **Releases → Draft a new release** → tag `v1.0.0` → **Publish release**.
-(CLI: `git tag v1.0.0 && git push origin v1.0.0`.)
-
-jsDelivr can now serve the files at:
-```
-https://cdn.jsdelivr.net/gh/YOUR-USERNAME/tracewell-supply-chain@v1.0.0/assets/twsc.css
-https://cdn.jsdelivr.net/gh/YOUR-USERNAME/tracewell-supply-chain@v1.0.0/assets/twsc.js
-```
-Open both in a browser once to confirm they load.
-
-## 4. Publish in Webflow
-
-Custom code embeds require a paid Webflow site plan, and they don't run inside the Designer canvas, so check them in **Preview** or on the published site.
-
-**Option A: native embed (recommended).** The widget lives directly in the Webflow page, so it uses Webflow's fonts and scrolls with the page.
-1. Open `webflow/embed-snippet.html`, replace `YOUR-USERNAME`, `YOUR-REPO` and the version tag.
-2. In the Webflow Designer: **Add (+) → Code Embed**, drop it where the prototype should go.
-3. Paste the snippet, **Save & Close**.
-4. Give the embed's parent a width (e.g. 100%). Set the height with `--twsc-height` on the `div` (e.g. `720px`, or `80vh`).
-5. **Publish** the site.
-
-**Option B: iframe.** Fully sandboxed from Webflow's CSS; simplest if anything looks off with Option A.
-Paste `webflow/iframe-snippet.html` (with your username/repo filled in) into a Code Embed instead.
+1. **Create the repo.** Go to https://github.com/new, name it (e.g. `supply-chain`), set it to **Public**, leave "Add a README" unchecked, and click **Create repository**.
+2. **Upload the files.** Click **uploading an existing file**, then drag in everything *inside* this folder. Make hidden files visible first (Mac: `Cmd+Shift+.` in Finder; Windows: View → Show → Hidden items) so `.github` and `.nojekyll` are included. Commit.
+3. **Allow the token builder to save.** Go to **Settings → Actions → General → Workflow permissions**, choose **Read and write permissions**, and click **Save**.
+4. **Turn on Pages.** Go to **Settings → Pages**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`, and click **Save**. After 1–2 minutes the site is live at `https://YOUR-USERNAME.github.io/supply-chain/`.
+5. **Link to it from your website.** In Webflow, add a link or button pointing to that URL. In the link settings, tick **Open in new tab** if you want visitors to keep your site open.
 
 ## Design tokens
 
@@ -95,14 +53,9 @@ The first time the Action runs, GitHub may need permission to push: **Settings �
 
 ## Updating the prototype later
 
-1. Edit `tokens.json`, `assets/twsc.css` or `assets/twsc.js` and commit to `main`. GitHub Pages updates automatically.
-2. Publish a new release tag, e.g. `v1.0.1`.
-3. In Webflow, change `@v1.0.0` → `@v1.0.1` in the embed and republish.
-
-Pinning to a tag is deliberate: Webflow only changes when you say so, and you can roll back by switching the tag. You *can* use `@main` instead to auto-update, but jsDelivr caches branch URLs for up to 12 hours (force a refresh by visiting `https://purge.jsdelivr.net/gh/YOUR-USERNAME/YOUR-REPO@main/assets/twsc.js`).
+Edit `tokens.json`, `assets/twsc.css` or `assets/twsc.js` on github.com (open the file, click the pencil icon, commit). GitHub Pages republishes automatically within a minute or two. The link on your website never needs to change.
 
 ## Notes
 
-- Only one instance per page: the script looks for a single `#twsc-root`.
 - Dark mode follows the visitor's system setting. Force a theme with `data-theme="light"` or `data-theme="dark"` on `#twsc-root`.
-- The page and `design-system.html` link to each other; in Webflow you can link to the GitHub Pages copy of the design system or rebuild it as a Webflow page.
+- `index.html` and `design-system.html` link to each other. The design system page lives at `.../supply-chain/design-system.html`.
