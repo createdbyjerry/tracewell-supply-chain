@@ -1,0 +1,67 @@
+/* GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit by hand. */
+#twsc-root {
+  --twsc-font: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --twsc-bg: #F9F9FB;
+  --twsc-surface: #FFFFFF;
+  --twsc-surface-2: #F7FAFC;
+  --twsc-primary: #581BD3;
+  --twsc-primary-soft: rgba(88, 27, 211, 0.08);
+  --twsc-primary-line: rgba(88, 27, 211, 0.2);
+  --twsc-border: #E2E8F0;
+  --twsc-text: #1A202C;
+  --twsc-text-2: #4A5568;
+  --twsc-muted: #718096;
+  --twsc-faint: #A0AEC0;
+  --twsc-chip: #EDF2F7;
+  --twsc-dot: #D9DEE7;
+  --twsc-edge-dim: #CBD2DC;
+  --twsc-label-bg: #1A202C;
+  --twsc-label-fg: #FFFFFF;
+  --twsc-mask: rgba(249, 249, 251, 0.72);
+  --twsc-shadow: 0 2px 4px rgba(26, 32, 44, 0.05);
+  --twsc-glow: 0 0 15px rgba(88, 27, 211, 0.3);
+}
+@media (prefers-color-scheme: dark) {
+  #twsc-root:not([data-theme="light"]) {
+    --twsc-bg: #13111A;
+    --twsc-surface: #1C1926;
+    --twsc-surface-2: #221F2E;
+    --twsc-primary: #9E74FF;
+    --twsc-primary-soft: rgba(158, 116, 255, 0.12);
+    --twsc-primary-line: rgba(158, 116, 255, 0.3);
+    --twsc-border: #2F2B3F;
+    --twsc-text: #ECEAF3;
+    --twsc-text-2: #BDB8CF;
+    --twsc-muted: #9A94AE;
+    --twsc-faint: #736D86;
+    --twsc-chip: #2A2638;
+    --twsc-dot: #2C2839;
+    --twsc-edge-dim: #3A3550;
+    --twsc-label-bg: #ECEAF3;
+    --twsc-label-fg: #13111A;
+    --twsc-mask: rgba(19, 17, 26, 0.72);
+    --twsc-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    --twsc-glow: 0 0 16px rgba(158,116,255,0.35);
+  }
+}
+#twsc-root[data-theme="dark"] {
+  --twsc-bg: #13111A;
+  --twsc-surface: #1C1926;
+  --twsc-surface-2: #221F2E;
+  --twsc-primary: #9E74FF;
+  --twsc-primary-soft: rgba(158, 116, 255, 0.12);
+  --twsc-primary-line: rgba(158, 116, 255, 0.3);
+  --twsc-border: #2F2B3F;
+  --twsc-text: #ECEAF3;
+  --twsc-text-2: #BDB8CF;
+  --twsc-muted: #9A94AE;
+  --twsc-faint: #736D86;
+  --twsc-chip: #2A2638;
+  --twsc-dot: #2C2839;
+  --twsc-edge-dim: #3A3550;
+  --twsc-label-bg: #ECEAF3;
+  --twsc-label-fg: #13111A;
+  --twsc-mask: rgba(19, 17, 26, 0.72);
+  --twsc-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  --twsc-glow: 0 0 16px rgba(158,116,255,0.35);
+}

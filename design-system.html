@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Design system — Tracewell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+/* Isolation: reset host-site styles on every element this widget uses */
+#twsc-root { all: initial; display: block; box-sizing: border-box; font-family: var(--twsc-font); color: var(--twsc-text);
+  background: var(--twsc-bg); -webkit-font-smoothing: antialiased; line-height: 1.5; font-size: 16px; text-align: left; }
+#twsc-root *, #twsc-root *::before, #twsc-root *::after { box-sizing: border-box; }
+#twsc-root :is(div, header, nav, section, aside, p, h1, h2, h3, h4, ul, li, dl, dt, dd, span, small, strong, b, i, a, button, input) {
+  margin: 0; padding: 0; border: 0; background: none; box-shadow: none; outline: 0; float: none; position: static;
+  width: auto; height: auto; min-width: 0; max-width: none; min-height: 0; max-height: none;
+  font: inherit; color: inherit; line-height: inherit; letter-spacing: normal; text-transform: none; text-decoration: none;
+  text-align: inherit; text-shadow: none; opacity: 1; transform: none; filter: none; border-radius: 0; list-style: none;
+  visibility: visible; transition: none; animation: none; overflow: visible; z-index: auto;
+  top: auto; right: auto; bottom: auto; left: auto; flex: 0 1 auto; flex-direction: row; flex-wrap: nowrap; order: 0;
+  justify-content: normal; align-items: normal; align-self: auto; gap: normal; grid-template-columns: none; white-space: normal;
+  vertical-align: baseline; clip-path: none; }
+#twsc-root :is(div, header, nav, section, aside, p, h1, h2, h3, h4, dl, dt, dd, ul, li) { display: block; }
+#twsc-root :is(span, small, strong, b, a) { display: inline; }
+#twsc-root :is(strong, b) { font-weight: 700; }
+#twsc-root button { display: inline-block; cursor: pointer; -webkit-appearance: none; appearance: none; }
+#twsc-root svg { display: inline-block; overflow: visible; max-width: none; max-height: none; fill: none; stroke: none; vertical-align: baseline; }
+#twsc-root svg * { fill: none; stroke: none; }
+#twsc-root svg.twsc-i * { stroke: currentColor; }
+#twsc-root [hidden] { display: none !important; }
+#twsc-root :focus-visible { outline: 2px solid var(--twsc-primary); outline-offset: 2px; }
+
+/* Design tokens (colors, shadows, font) live in tokens.json → assets/tokens.css.
+   Only layout-level root settings stay here. */
+#twsc-root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: light; }
+@media (prefers-color-scheme: dark) { #twsc-root:not([data-theme="light"]) { color-scheme: dark; } }
+#twsc-root[data-theme="dark"] { color-scheme: dark; }
+#twsc-root *, #twsc-root *::before, #twsc-root *::after { box-sizing: inherit; }
+#twsc-root button { font: inherit; color: inherit; cursor: pointer; }
+#twsc-root :focus-visible { outline: 2px solid var(--twsc-primary); outline-offset: 2px; }
+#twsc-root svg.twsc-i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+/* Design system view */
+#twsc-root .twsc-ds { padding: 48px 24px 80px; }
+#twsc-root .twsc-ds-inner { max-width: 1200px; margin: 0 auto; }
+#twsc-root .twsc-ds-back { text-decoration: none; background: none; border: 0; color: var(--twsc-primary); font-weight: 600; padding: 8px 10px; border-radius: 4px; margin: 0 0 24px -10px; display: inline-flex; gap: 6px; align-items: center; }
+#twsc-root .twsc-ds-back:hover { background: var(--twsc-primary-soft); }
+#twsc-root .twsc-ds h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; color: var(--twsc-primary); margin: 0 0 8px; line-height: 1.05; }
+#twsc-root .twsc-ds-sub { color: var(--twsc-text-2); font-size: 1.1rem; margin: 0 0 40px; max-width: 60ch; }
+#twsc-root .twsc-ds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; }
+#twsc-root .twsc-ds-card { background: var(--twsc-surface); border: 1px solid var(--twsc-border); border-radius: 8px; padding: 28px; box-shadow: 0 4px 6px rgba(0,0,0,0.04); }
+#twsc-root .twsc-ds-card h2 { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; margin: 0 0 20px; font-weight: 600; }
+#twsc-root .twsc-ds-card h2 svg.twsc-i { color: var(--twsc-primary); }
+#twsc-root .twsc-ds-card dl { margin: 0; display: grid; gap: 14px; }
+#twsc-root .twsc-ds-card dt { color: var(--twsc-primary); font-weight: 700; font-size: 0.85rem; }
+#twsc-root .twsc-ds-card dd { margin: 2px 0 0; font-size: 0.875rem; }
+#twsc-root .twsc-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+#twsc-root .twsc-swatch { display: flex; align-items: center; gap: 12px; font-size: 0.75rem; }
+#twsc-root .twsc-swatch i { width: 40px; height: 40px; border-radius: 4px; border: 1px solid var(--twsc-border); flex: none; }
+#twsc-root .twsc-swatch b { display: block; }
+#twsc-root .twsc-swatch span { color: var(--twsc-muted); }
+#twsc-root .twsc-type-row + .twsc-type-row { margin-top: 18px; }
+#twsc-root .twsc-type-row small { color: var(--twsc-muted); font-size: 0.75rem; }
+#twsc-root .twsc-comp { border: 1px dashed var(--twsc-border); border-radius: 6px; padding: 14px; font-size: 0.8rem; line-height: 1.5; }
+#twsc-root .twsc-comp + .twsc-comp { margin-top: 12px; }
+#twsc-root .twsc-comp b { display: block; color: var(--twsc-primary); font-size: 0.875rem; margin-bottom: 2px; }
+#twsc-root .twsc-ds-rule { height: 1px; background: var(--twsc-border); margin: 56px 0; }
+#twsc-root .twsc-ds h3 { font-size: 1.8rem; margin: 0 0 28px; }
+#twsc-root .twsc-principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 32px; }
+#twsc-root .twsc-principles h4 { color: var(--twsc-primary); margin: 0 0 8px; font-size: 1.1rem; }
+#twsc-root .twsc-principles p { margin: 0; color: var(--twsc-text-2); font-size: 0.9rem; line-height: 1.6; }
+
+/* Standalone page only */
+body[data-twsc-standalone] { margin: 0; }
+#twsc-root { min-height: 100vh; }
+</style>
+</head>
+<body data-twsc-standalone>
+<div id="twsc-root">
+
+    <div class="twsc-ds">
+      <div class="twsc-ds-inner">
+        <a class="twsc-ds-back" href="index.html"><svg class="twsc-i" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back to supply chain</a>
+        <h1>Design system</h1>
+        <p class="twsc-ds-sub">Technical documentation for the natural gas supply chain prototype.</p>
+        <div class="twsc-ds-grid">
+          <div class="twsc-ds-card">
+            <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>Tech stack</h2>
+            <dl>
+              <div><dt>Core</dt><dd>One HTML file: vanilla JavaScript, CSS custom properties, no build step</dd></div>
+              <div><dt>Graph engine</dt><dd>Hand-rolled SVG + DOM renderer with pan, zoom, drag, minimap and smooth-step edges (replaces React Flow 11)</dd></div>
+              <div><dt>UI components</dt><dd>Plain HTML elements styled to match the original Material UI 7 look</dd></div>
+              </dl>
+          </div>
+          <div class="twsc-ds-card">
+            <h2><svg class="twsc-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.3"/><circle cx="12" cy="7.5" r="1.3"/><circle cx="16" cy="10" r="1.3"/></svg>Color palette</h2>
+            <div class="twsc-swatches">
+              <div class="twsc-swatch"><i style="background:var(--twsc-primary)"></i><div><b>Primary accent</b><span>--twsc-primary</span></div></div>
+              <div class="twsc-swatch"><i style="background:var(--twsc-bg)"></i><div><b>Background</b><span>--twsc-bg</span></div></div>
+              <div class="twsc-swatch"><i style="background:var(--twsc-surface)"></i><div><b>Surface</b><span>--twsc-surface</span></div></div>
+              <div class="twsc-swatch"><i style="background:var(--twsc-border)"></i><div><b>Border</b><span>--twsc-border</span></div></div>
+            </div>
+          </div>
+          <div class="twsc-ds-card">
+            <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M4 7V5h16v2M12 5v14M9 19h6"/></svg>Typography</h2>
+            <div class="twsc-type-row"><div style="font-size:2rem;font-weight:800">Montserrat ExtraBold</div><small>Headings and hero text</small></div>
+            <div class="twsc-type-row"><div style="font-size:1.2rem;font-weight:500">Montserrat Medium</div><small>UI labels and navigation</small></div>
+            <div class="twsc-type-row"><div style="font-size:0.875rem">Montserrat Regular</div><small>Body copy and descriptions</small></div>
+          </div>
+          <div class="twsc-ds-card">
+            <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M10 4h4v3a2 2 0 1 0 4 0V4h2v6h-3a2 2 0 1 0 0 4h3v6h-6v-3a2 2 0 1 0-4 0v3H4V4h6z"/></svg>Core components</h2>
+            <div class="twsc-comp"><b>Stage node</b>A graph node with an icon, category and name. Circle nodes mark meters and tanks; blank nodes terminate labeled outflows.</div>
+            <div class="twsc-comp"><b>Node inspector</b>Side panel with carbon intensity, methane and throughput data, plus the full upstream and downstream path of the selected stage.</div>
+          </div>
+        </div>
+        <div class="twsc-ds-rule"></div>
+        <h3>Architecture principles</h3>
+        <div class="twsc-principles">
+          <div><h4>Real-time data</h4><p>Graph state lives in plain JavaScript objects; only the edges touching a dragged node are recomputed, so large graphs stay responsive.</p></div>
+          <div><h4>Traceability</h4><p>Selecting a stage walks the graph in both directions and highlights its full lineage, so every product can be traced back to its source wells.</p></div>
+          <div><h4>Responsive design</h4><p>Panels collapse into sheets and overlays on narrow screens, and the palette adapts to light and dark system settings.</p></div>
+        </div>
+      </div>
+    </div>
+</div>
+</body>
+</html>
