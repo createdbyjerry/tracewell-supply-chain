@@ -1,5 +1,7 @@
 /* GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit by hand. */
+/* Default theme: light. Set data-theme="dark" on #twsc-root (the theme toggle does this) to switch. */
 #twsc-root {
+  color-scheme: light;
   --twsc-font: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --twsc-bg: #F9F9FB;
   --twsc-surface: #FFFFFF;
@@ -21,30 +23,8 @@
   --twsc-shadow: 0 2px 4px rgba(26, 32, 44, 0.05);
   --twsc-glow: 0 0 15px rgba(88, 27, 211, 0.3);
 }
-@media (prefers-color-scheme: dark) {
-  #twsc-root:not([data-theme="light"]) {
-    --twsc-bg: #13111A;
-    --twsc-surface: #1C1926;
-    --twsc-surface-2: #221F2E;
-    --twsc-primary: #9E74FF;
-    --twsc-primary-soft: rgba(158, 116, 255, 0.12);
-    --twsc-primary-line: rgba(158, 116, 255, 0.3);
-    --twsc-border: #2F2B3F;
-    --twsc-text: #ECEAF3;
-    --twsc-text-2: #BDB8CF;
-    --twsc-muted: #9A94AE;
-    --twsc-faint: #736D86;
-    --twsc-chip: #2A2638;
-    --twsc-dot: #2C2839;
-    --twsc-edge-dim: #3A3550;
-    --twsc-label-bg: #ECEAF3;
-    --twsc-label-fg: #13111A;
-    --twsc-mask: rgba(19, 17, 26, 0.72);
-    --twsc-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    --twsc-glow: 0 0 16px rgba(158,116,255,0.35);
-  }
-}
 #twsc-root[data-theme="dark"] {
+  color-scheme: dark;
   --twsc-bg: #13111A;
   --twsc-surface: #1C1926;
   --twsc-surface-2: #221F2E;

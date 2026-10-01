@@ -41,7 +41,14 @@ All colors, shadows and the font stack live in `tokens.json`, grouped by theme:
 }
 ```
 
-Each entry becomes a CSS variable: `primary` → `--twsc-primary`. Light values are the default; dark values apply when the visitor's system is in dark mode, or when `#twsc-root` has `data-theme="dark"`.
+Each entry becomes a CSS variable: `primary` → `--twsc-primary`. Light values are the default; dark values apply when `#twsc-root` has `data-theme="dark"`, which is what the theme toggle sets.
+
+Two settings at the top of `tokens.json` control which theme visitors see first:
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| `defaultTheme` | `"light"` | The theme shown before a visitor touches the toggle |
+| `followSystem` | `false` | Set to `true` to use the visitor's OS light/dark setting until they pick one |
 
 **To change a token:** edit `tokens.json` (on github.com: open the file → pencil icon → commit). The *Build design tokens* GitHub Action regenerates `assets/tokens.css` and commits it within about a minute. Check the repo's **Actions** tab to see it run.
 
@@ -57,5 +64,6 @@ Edit `tokens.json`, `assets/twsc.css` or `assets/twsc.js` on github.com (open th
 
 ## Notes
 
-- Dark mode follows the visitor's system setting. Force a theme with `data-theme="light"` or `data-theme="dark"` on `#twsc-root`.
+- **Theme toggle:** the sun/moon switch at the right end of the top bar flips between light and dark. Light is the default. The choice is saved in the visitor's browser (`localStorage`, key `twsc-theme`) and applies to both `index.html` and `design-system.html`.
+- To preset a theme when embedding (e.g. Webflow), put `data-theme="dark"` on `#twsc-root`. A visitor's saved choice still takes priority.
 - `index.html` and `design-system.html` link to each other. The design system page lives at `.../supply-chain/design-system.html`.

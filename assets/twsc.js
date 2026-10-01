@@ -127,6 +127,11 @@
       <button class="twsc-tab" role="tab" data-view="twin" aria-selected="true">Well pad to data center</button>
       <button class="twsc-tab" role="tab" data-view="wellpad" aria-selected="false">Well pad flow</button>
     </nav>
+    <button class="twsc-theme" id="twsc-themeToggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme">
+      <span class="twsc-theme-thumb" aria-hidden="true"></span>
+      <svg class="twsc-i twsc-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="twsc-i twsc-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>
+    </button>
   </header>
 
   <div class="twsc-main" id="twsc-flowView">
@@ -151,6 +156,27 @@
 </div>`;
   const $ = s => root.querySelector(s);
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Theme ----------
+  // Light by default. The visitor's choice is remembered in localStorage (shared with design-system.html).
+  // A host page can also preset data-theme="dark" on #twsc-root; a saved choice still wins.
+  const THEME_KEY = 'twsc-theme';
+  const themeToggle = $('#twsc-themeToggle');
+  const isTheme = t => t === 'light' || t === 'dark';
+  function savedTheme() { try { return localStorage.getItem(THEME_KEY); } catch { return null; } }
+  function applyTheme(t) {
+    root.dataset.theme = t;
+    if (!themeToggle) return; // host supplied its own markup without the toggle
+    themeToggle.setAttribute('aria-checked', String(t === 'dark'));
+    themeToggle.title = t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+  }
+  const saved = savedTheme();
+  applyTheme(isTheme(saved) ? saved : isTheme(root.dataset.theme) ? root.dataset.theme : 'light');
+  themeToggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* storage blocked: theme still applies for this visit */ }
+  });
 
   const canvas = $('#twsc-canvas'), world = $('#twsc-world'), edgesSvg = $('#twsc-edges'), labelsEl = $('#twsc-labels'), nodesEl = $('#twsc-nodes');
   const inspector = $('#twsc-inspector');

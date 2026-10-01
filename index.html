@@ -12,6 +12,8 @@
 </head>
 <body data-twsc-standalone>
 <div id="twsc-root"></div>
+<!-- Apply the saved theme before first paint (light is the default). twsc.js keeps it in sync after that. -->
+<script>try{var t=localStorage.getItem('twsc-theme');if(t==='dark'||t==='light')document.getElementById('twsc-root').dataset.theme=t}catch(e){}</script>
 <script src="assets/twsc.js" defer></script>
 </body>
 </html>
