@@ -24,19 +24,30 @@ const missing = [
 ];
 if (missing.length) { console.error('tokens.json error:\n  ' + missing.join('\n  ')); process.exit(1); }
 
+// Which theme visitors see first, and whether their OS setting may override it.
+const def = tokens.defaultTheme ?? 'light';
+if (def !== 'light' && def !== 'dark') { console.error(`tokens.json error: defaultTheme must be "light" or "dark", got "${def}"`); process.exit(1); }
+const alt = def === 'light' ? 'dark' : 'light';
+const pairs = { light: lightPairs, dark: darkPairs };
+const followSystem = tokens.followSystem === true;
+
 const shared = Object.entries(tokens.shared || {}).map(([k, t]) => [k, typeof t === 'object' ? t.value : t]);
 
 const css = `/* GENERATED from tokens.json by scripts/build-tokens.mjs. Do not edit by hand. */
+/* Default theme: ${def}. Set data-theme="${alt}" on ${sel} (the theme toggle does this) to switch.${followSystem ? ` Follows the OS setting until a theme is chosen.` : ''} */
 ${sel} {
-${decls([...shared, ...lightPairs], '  ')}
+  color-scheme: ${def};
+${decls([...shared, ...pairs[def]], '  ')}
 }
-@media (prefers-color-scheme: dark) {
-  ${sel}:not([data-theme="light"]) {
-${decls(darkPairs, '    ')}
+${followSystem ? `@media (prefers-color-scheme: ${alt}) {
+  ${sel}:not([data-theme="${def}"]) {
+    color-scheme: ${alt};
+${decls(pairs[alt], '    ')}
   }
 }
-${sel}[data-theme="dark"] {
-${decls(darkPairs, '  ')}
+` : ''}${sel}[data-theme="${alt}"] {
+  color-scheme: ${alt};
+${decls(pairs[alt], '  ')}
 }
 `;
 
@@ -46,5 +57,5 @@ if (process.argv.includes('--check')) {
   console.log('assets/tokens.css is up to date.');
 } else {
   writeFileSync(out, css);
-  console.log(`Wrote assets/tokens.css (${lightPairs.length + shared.length} tokens, light + dark).`);
+  console.log(`Wrote assets/tokens.css (${lightPairs.length + shared.length} tokens, default ${def}${followSystem ? ', follows system' : ''}).`);
 }

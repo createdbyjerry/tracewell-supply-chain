@@ -25,9 +25,8 @@
 
 /* Design tokens (colors, shadows, font) live in tokens.json → assets/tokens.css.
    Only layout-level root settings stay here. */
-#twsc-root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: light; }
-@media (prefers-color-scheme: dark) { #twsc-root:not([data-theme="light"]) { color-scheme: dark; } }
-#twsc-root[data-theme="dark"] { color-scheme: dark; }
+#twsc-root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+/* color-scheme is set per theme in tokens.css */
 #twsc-root *, #twsc-root *::before, #twsc-root *::after { box-sizing: inherit; }
 #twsc-root [hidden] { display: none !important; }
 #twsc-root button { font: inherit; color: inherit; cursor: pointer; }
@@ -50,6 +49,26 @@
 }
 #twsc-root .twsc-tab:hover { color: var(--twsc-primary); }
 #twsc-root .twsc-tab[aria-selected="true"] { color: var(--twsc-primary); border-bottom-color: var(--twsc-primary); }
+/* Theme toggle: a switch with the sun (light) on the left and the moon (dark) on the right.
+   The thumb sits under whichever theme is active. aria-checked="true" means dark. */
+#twsc-root .twsc-tabs { margin-left: auto; }
+#twsc-root .twsc-theme {
+  position: relative; display: inline-flex; align-items: center; justify-content: space-between; flex: none;
+  width: 60px; height: 32px; padding: 0 8px; border-radius: 999px;
+  background: var(--twsc-chip); border: 1px solid var(--twsc-border); color: var(--twsc-muted);
+  transition: border-color 0.15s ease;
+}
+#twsc-root .twsc-theme:hover { border-color: var(--twsc-primary-line); }
+#twsc-root .twsc-theme:focus-visible { outline-offset: 3px; }
+#twsc-root .twsc-theme-thumb {
+  position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%;
+  display: block; background: var(--twsc-surface); box-shadow: var(--twsc-shadow), 0 0 0 1px var(--twsc-primary-line);
+  transition: transform 0.2s ease;
+}
+#twsc-root .twsc-theme[aria-checked="true"] .twsc-theme-thumb { transform: translateX(28px); }
+#twsc-root .twsc-theme svg.twsc-i { position: relative; z-index: 1; width: 14px; height: 14px; stroke-width: 2; transition: color 0.2s ease; }
+#twsc-root .twsc-theme[aria-checked="false"] .twsc-theme-sun,
+#twsc-root .twsc-theme[aria-checked="true"] .twsc-theme-moon { color: var(--twsc-primary); }
 #twsc-root .twsc-main { flex: 1; display: flex; min-height: 0; position: relative; }
 /* Inspector */
 #twsc-root .twsc-inspector {
@@ -169,6 +188,8 @@
 @media (max-width: 560px) {
   #twsc-root .twsc-brand { display: none; }
   #twsc-root .twsc-topbar { justify-content: flex-start; }
+  #twsc-root .twsc-tabs { margin-left: 0; }
+  #twsc-root .twsc-theme { margin-left: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   #twsc-root .twsc-edge.twsc-animated { animation: none; stroke-dasharray: none; }

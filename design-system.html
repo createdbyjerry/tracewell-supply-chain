@@ -34,9 +34,8 @@
 
 /* Design tokens (colors, shadows, font) live in tokens.json → assets/tokens.css.
    Only layout-level root settings stay here. */
-#twsc-root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: light; }
-@media (prefers-color-scheme: dark) { #twsc-root:not([data-theme="light"]) { color-scheme: dark; } }
-#twsc-root[data-theme="dark"] { color-scheme: dark; }
+#twsc-root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+/* color-scheme is set per theme in tokens.css */
 #twsc-root *, #twsc-root *::before, #twsc-root *::after { box-sizing: inherit; }
 #twsc-root button { font: inherit; color: inherit; cursor: pointer; }
 #twsc-root :focus-visible { outline: 2px solid var(--twsc-primary); outline-offset: 2px; }
@@ -78,6 +77,8 @@ body[data-twsc-standalone] { margin: 0; }
 </head>
 <body data-twsc-standalone>
 <div id="twsc-root">
+<!-- Apply the saved theme before first paint (light is the default). twsc.js keeps it in sync after that. -->
+<script>try{var t=localStorage.getItem('twsc-theme');if(t==='dark'||t==='light')document.getElementById('twsc-root').dataset.theme=t}catch(e){}</script>
 
     <div class="twsc-ds">
       <div class="twsc-ds-inner">
@@ -112,6 +113,7 @@ body[data-twsc-standalone] { margin: 0; }
             <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M10 4h4v3a2 2 0 1 0 4 0V4h2v6h-3a2 2 0 1 0 0 4h3v6h-6v-3a2 2 0 1 0-4 0v3H4V4h6z"/></svg>Core components</h2>
             <div class="twsc-comp"><b>Stage node</b>A graph node with an icon, category and name. Circle nodes mark meters and tanks; blank nodes terminate labeled outflows.</div>
             <div class="twsc-comp"><b>Node inspector</b>Side panel with carbon intensity, methane and throughput data, plus the full upstream and downstream path of the selected stage.</div>
+            <div class="twsc-comp"><b>Theme toggle</b>Switch at the right end of the top bar. Sun is light, moon is dark; the thumb sits under the active theme. Light is the default, and the choice is remembered across visits and pages.</div>
           </div>
         </div>
         <div class="twsc-ds-rule"></div>
@@ -119,7 +121,7 @@ body[data-twsc-standalone] { margin: 0; }
         <div class="twsc-principles">
           <div><h4>Real-time data</h4><p>Graph state lives in plain JavaScript objects; only the edges touching a dragged node are recomputed, so large graphs stay responsive.</p></div>
           <div><h4>Traceability</h4><p>Selecting a stage walks the graph in both directions and highlights its full lineage, so every product can be traced back to its source wells.</p></div>
-          <div><h4>Responsive design</h4><p>Panels collapse into sheets and overlays on narrow screens, and the palette adapts to light and dark system settings.</p></div>
+          <div><h4>Responsive design</h4><p>Panels collapse into sheets and overlays on narrow screens, and every color comes from tokens with a light theme (the default) and a dark theme visitors can switch to.</p></div>
         </div>
       </div>
     </div>
