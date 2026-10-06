@@ -43,12 +43,12 @@
 /* Design system view */
 #twsc-root .twsc-ds { padding: 48px 24px 80px; }
 #twsc-root .twsc-ds-inner { max-width: 1200px; margin: 0 auto; }
-#twsc-root .twsc-ds-back { text-decoration: none; background: none; border: 0; color: var(--twsc-primary); font-weight: 600; padding: 8px 10px; border-radius: 4px; margin: 0 0 24px -10px; display: inline-flex; gap: 6px; align-items: center; }
+#twsc-root .twsc-ds-back { text-decoration: none; background: none; border: 0; color: var(--twsc-primary); font-weight: 600; padding: 8px 14px; border-radius: var(--twsc-radius-pill); margin: 0 0 24px -14px; display: inline-flex; gap: 6px; align-items: center; }
 #twsc-root .twsc-ds-back:hover { background: var(--twsc-primary-soft); }
 #twsc-root .twsc-ds h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; color: var(--twsc-primary); margin: 0 0 8px; line-height: 1.05; }
 #twsc-root .twsc-ds-sub { color: var(--twsc-text-2); font-size: 1.1rem; margin: 0 0 40px; max-width: 60ch; }
 #twsc-root .twsc-ds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; }
-#twsc-root .twsc-ds-card { background: var(--twsc-surface); border: 1px solid var(--twsc-border); border-radius: 8px; padding: 28px; box-shadow: 0 4px 6px rgba(0,0,0,0.04); }
+#twsc-root .twsc-ds-card { background: var(--twsc-surface); border: 1px solid var(--twsc-border); border-radius: var(--twsc-radius-xl); padding: 30px; box-shadow: var(--twsc-float); }
 #twsc-root .twsc-ds-card h2 { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; margin: 0 0 20px; font-weight: 600; }
 #twsc-root .twsc-ds-card h2 svg.twsc-i { color: var(--twsc-primary); }
 #twsc-root .twsc-ds-card dl { margin: 0; display: grid; gap: 14px; }
@@ -56,14 +56,23 @@
 #twsc-root .twsc-ds-card dd { margin: 2px 0 0; font-size: 0.875rem; }
 #twsc-root .twsc-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 #twsc-root .twsc-swatch { display: flex; align-items: center; gap: 12px; font-size: 0.75rem; }
-#twsc-root .twsc-swatch i { width: 40px; height: 40px; border-radius: 4px; border: 1px solid var(--twsc-border); flex: none; }
+#twsc-root .twsc-swatch i { width: 40px; height: 40px; border-radius: var(--twsc-radius-md); border: 1px solid var(--twsc-border); flex: none; }
 #twsc-root .twsc-swatch b { display: block; }
 #twsc-root .twsc-swatch span { color: var(--twsc-muted); }
 #twsc-root .twsc-type-row + .twsc-type-row { margin-top: 18px; }
 #twsc-root .twsc-type-row small { color: var(--twsc-muted); font-size: 0.75rem; }
-#twsc-root .twsc-comp { border: 1px dashed var(--twsc-border); border-radius: 6px; padding: 14px; font-size: 0.8rem; line-height: 1.5; }
+#twsc-root .twsc-comp { border: 1px dashed var(--twsc-border); border-radius: var(--twsc-radius-lg); padding: 14px; font-size: 0.8rem; line-height: 1.5; }
 #twsc-root .twsc-comp + .twsc-comp { margin-top: 12px; }
 #twsc-root .twsc-comp b { display: block; color: var(--twsc-primary); font-size: 0.875rem; margin-bottom: 2px; }
+#twsc-root .twsc-radii { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 26px; }
+#twsc-root .twsc-radius { font-size: 0.72rem; line-height: 1.35; }
+#twsc-root .twsc-radius i { display: block; height: 52px; margin-bottom: 8px; background: var(--twsc-primary-soft); border: 1.5px solid var(--twsc-primary); border-right: 0; border-bottom: 0; }
+#twsc-root .twsc-radius b { display: block; }
+#twsc-root .twsc-radius span, #twsc-root .twsc-elev span { color: var(--twsc-muted); }
+#twsc-root .twsc-elevs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 6px 4px 8px; }
+#twsc-root .twsc-elev { font-size: 0.72rem; line-height: 1.35; }
+#twsc-root .twsc-elev i { display: block; height: 64px; margin-bottom: 10px; background: var(--twsc-surface); border: 1px solid var(--twsc-border); border-radius: var(--twsc-radius-lg); }
+#twsc-root .twsc-elev b { display: block; }
 #twsc-root .twsc-ds-rule { height: 1px; background: var(--twsc-border); margin: 56px 0; }
 #twsc-root .twsc-ds h3 { font-size: 1.8rem; margin: 0 0 28px; }
 #twsc-root .twsc-principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 32px; }
@@ -89,7 +98,8 @@ body[data-twsc-standalone] { margin: 0; }
           <div class="twsc-ds-card">
             <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>Tech stack</h2>
             <dl>
-              <div><dt>Core</dt><dd>One HTML file: vanilla JavaScript, CSS custom properties, no build step</dd></div>
+              <div><dt>Core</dt><dd>Static HTML, CSS custom properties and vanilla JavaScript, no build step</dd></div>
+              <div><dt>Design tokens</dt><dd>tokens.json compiled to assets/tokens.css by a zero-dependency Node script (run automatically by GitHub Actions)</dd></div>
               <div><dt>Graph engine</dt><dd>Hand-rolled SVG + DOM renderer with pan, zoom, drag, minimap and smooth-step edges (replaces React Flow 11)</dd></div>
               <div><dt>UI components</dt><dd>Plain HTML elements styled to match the original Material UI 7 look</dd></div>
               </dl>
@@ -110,9 +120,25 @@ body[data-twsc-standalone] { margin: 0; }
             <div class="twsc-type-row"><div style="font-size:0.875rem">Montserrat Regular</div><small>Body copy and descriptions</small></div>
           </div>
           <div class="twsc-ds-card">
+            <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M4 20V10a6 6 0 0 1 6-6h10"/><path d="M4 20h16V8" stroke-dasharray="2 3"/></svg>Shape and elevation</h2>
+            <div class="twsc-radii">
+              <div class="twsc-radius"><i style="border-top-left-radius:var(--twsc-radius-sm)"></i><b>8px</b><span>radius-sm</span></div>
+              <div class="twsc-radius"><i style="border-top-left-radius:var(--twsc-radius-md)"></i><b>12px</b><span>radius-md</span></div>
+              <div class="twsc-radius"><i style="border-top-left-radius:var(--twsc-radius-lg)"></i><b>16px</b><span>radius-lg</span></div>
+              <div class="twsc-radius"><i style="border-top-left-radius:var(--twsc-radius-xl)"></i><b>28px</b><span>radius-xl</span></div>
+              <div class="twsc-radius"><i style="border-top-left-radius:52px"></i><b>Pill</b><span>radius-pill</span></div>
+            </div>
+            <div class="twsc-elevs">
+              <div class="twsc-elev"><i style="box-shadow:var(--twsc-shadow)"></i><b>Resting</b><span>--twsc-shadow: nodes, active tab</span></div>
+              <div class="twsc-elev"><i style="box-shadow:var(--twsc-float);border-radius:var(--twsc-radius-xl)"></i><b>Floating</b><span>--twsc-float: app bar, side panel, canvas controls</span></div>
+            </div>
+          </div>
+          <div class="twsc-ds-card">
             <h2><svg class="twsc-i" viewBox="0 0 24 24"><path d="M10 4h4v3a2 2 0 1 0 4 0V4h2v6h-3a2 2 0 1 0 0 4h3v6h-6v-3a2 2 0 1 0-4 0v3H4V4h6z"/></svg>Core components</h2>
             <div class="twsc-comp"><b>Stage node</b>A graph node with an icon, category and name. Circle nodes mark meters and tanks; blank nodes terminate labeled outflows.</div>
-            <div class="twsc-comp"><b>Node inspector</b>Side panel with carbon intensity, methane and throughput data, plus the full upstream and downstream path of the selected stage.</div>
+            <div class="twsc-comp"><b>Floating app bar</b>Brand, a segmented pill of view tabs and the theme toggle, in a rounded container (radius-xl, float shadow) that hovers over the canvas with a 12px gap to the screen edge.</div>
+            <div class="twsc-comp"><b>Node inspector</b>Floating side panel with carbon intensity, methane and throughput data, plus the full upstream and downstream path of the selected stage. On narrow screens it becomes a floating bottom sheet.</div>
+            <div class="twsc-comp"><b>Panel toggle</b>Round button riding the inspector's right edge. Collapsing slides the panel away and turns the button into a pill at the screen edge; the zoom controls and hint follow it. Selecting a node expands the panel again, and the choice is remembered across visits.</div>
             <div class="twsc-comp"><b>Theme toggle</b>Switch at the right end of the top bar. Sun is light, moon is dark; the thumb sits under the active theme. Light is the default, and the choice is remembered across visits and pages.</div>
           </div>
         </div>
@@ -121,7 +147,7 @@ body[data-twsc-standalone] { margin: 0; }
         <div class="twsc-principles">
           <div><h4>Real-time data</h4><p>Graph state lives in plain JavaScript objects; only the edges touching a dragged node are recomputed, so large graphs stay responsive.</p></div>
           <div><h4>Traceability</h4><p>Selecting a stage walks the graph in both directions and highlights its full lineage, so every product can be traced back to its source wells.</p></div>
-          <div><h4>Responsive design</h4><p>Panels collapse into sheets and overlays on narrow screens, and every color comes from tokens with a light theme (the default) and a dark theme visitors can switch to.</p></div>
+          <div><h4>Responsive design</h4><p>The graph fills the screen and every panel floats above it, so collapsing the inspector hands the space back to the graph. Panels become sheets on narrow screens, and every color, radius and shadow comes from tokens, with a light theme (the default) and a dark theme visitors can switch to.</p></div>
         </div>
       </div>
     </div>

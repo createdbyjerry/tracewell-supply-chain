@@ -136,6 +136,10 @@
 
   <div class="twsc-main" id="twsc-flowView">
     <aside class="twsc-inspector twsc-is-empty" id="twsc-inspector" aria-label="Node inspector" aria-live="polite"></aside>
+    <button class="twsc-panel-toggle" id="twsc-panelToggle" type="button" aria-controls="twsc-inspector" aria-expanded="true" aria-label="Collapse side panel" title="Collapse side panel">
+      <svg class="twsc-i twsc-pt-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      <svg class="twsc-i twsc-pt-panel" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+    </button>
 
     <section class="twsc-canvas" id="twsc-canvas" aria-label="Supply chain graph">
       <div class="twsc-world" id="twsc-world">
@@ -177,6 +181,25 @@
     applyTheme(next);
     try { localStorage.setItem(THEME_KEY, next); } catch { /* storage blocked: theme still applies for this visit */ }
   });
+
+  // ---------- Side panel collapse ----------
+  // Expanded by default. The visitor's choice is remembered like the theme (key twsc-panel).
+  const PANEL_KEY = 'twsc-panel';
+  const app = $('.twsc-app'), panelToggle = $('#twsc-panelToggle');
+  const isMobile = () => matchMedia('(max-width: 900px)').matches;
+  function setPanel(open, remember) {
+    app.classList.toggle('twsc-panel-collapsed', !open);
+    if (panelToggle) {
+      panelToggle.setAttribute('aria-expanded', String(open));
+      const label = open ? 'Collapse side panel' : 'Expand side panel';
+      panelToggle.setAttribute('aria-label', label); panelToggle.title = label;
+    }
+    if (remember) { try { localStorage.setItem(PANEL_KEY, open ? 'open' : 'collapsed'); } catch { /* storage blocked */ } }
+  }
+  const panelOpen = () => !app.classList.contains('twsc-panel-collapsed');
+  let savedPanel = null; try { savedPanel = localStorage.getItem(PANEL_KEY); } catch { /* storage blocked */ }
+  setPanel(savedPanel !== 'collapsed', false);
+  panelToggle?.addEventListener('click', () => setPanel(!panelOpen(), true));
 
   const canvas = $('#twsc-canvas'), world = $('#twsc-world'), edgesSvg = $('#twsc-edges'), labelsEl = $('#twsc-labels'), nodesEl = $('#twsc-nodes');
   const inspector = $('#twsc-inspector');
@@ -385,6 +408,7 @@
 
   function select(id) {
     selectedId = id;
+    if (id && !panelOpen()) setPanel(true, false); // inspecting a node brings the panel back
     applyHighlight();
     renderInspector();
     $('#twsc-hint').hidden = !!id;
@@ -413,15 +437,24 @@
     };
     requestAnimationFrame(step);
   }
+  // The part of the canvas not covered by the floating app bar and side panel.
+  function viewArea() {
+    const r = canvas.getBoundingClientRect();
+    const bar = $('.twsc-topbar').getBoundingClientRect();
+    const top = Math.max(0, bar.bottom - r.top);
+    let left = 0;
+    if (!isMobile() && panelOpen()) left = Math.max(0, inspector.getBoundingClientRect().right - r.left);
+    return { x: left, y: top, w: r.width - left, h: r.height - top };
+  }
   function fit(dur) {
-    const r = canvas.getBoundingClientRect(), b = bounds(), pad = 0.07;
-    const k = clamp(Math.min(r.width / (b.w * (1 + 2 * pad)), r.height / (b.h * (1 + 2 * pad))), 0.15, 1.5);
-    animateTo({ k, x: r.width / 2 - (b.x + b.w / 2) * k, y: r.height / 2 - (b.y + b.h / 2) * k }, dur);
+    const a = viewArea(), b = bounds(), pad = 0.07;
+    const k = clamp(Math.min(a.w / (b.w * (1 + 2 * pad)), a.h / (b.h * (1 + 2 * pad))), 0.15, 1.5);
+    animateTo({ k, x: a.x + a.w / 2 - (b.x + b.w / 2) * k, y: a.y + a.h / 2 - (b.y + b.h / 2) * k }, dur);
   }
   function centerOn(id) {
-    const n = nodeById(id), r = canvas.getBoundingClientRect();
+    const n = nodeById(id), a = viewArea();
     const k = Math.max(T.k, 0.7);
-    animateTo({ k, x: r.width / 2 - (n.x + n.w / 2) * k, y: r.height / 2 - (n.y + n.h / 2) * k });
+    animateTo({ k, x: a.x + a.w / 2 - (n.x + n.w / 2) * k, y: a.y + a.h / 2 - (n.y + n.h / 2) * k });
   }
   function zoomAt(px, py, k) {
     k = clamp(k, 0.15, 2.5);
